@@ -112,7 +112,7 @@ sequenceDiagram
     FE->>BE: POST /api/lupin-index (위경도 및 카페 데이터 전송)
     
     activate BE
-    BE->>BE: 위경도(lat, lng) ➡️ 기상청 전용 격자(nx, ny) 변환
+    BE->>BE: 위경도(lat, lng) -> 기상청 전용 격자(nx, ny) 변환
     BE->>KMA: 초단기예보 API 호출 (격자 및 동적 base_time 적용)
     KMA-->>BE: 실시간 예보 데이터 (기온, 하늘상태, 강수형태) 반환
     BE->>BE: 100점 만점 기반 루팡 지수 산출 (날씨 40% + 카페 60%)
