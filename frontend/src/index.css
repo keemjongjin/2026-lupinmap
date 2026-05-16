@@ -1,0 +1,323 @@
+:root {
+  --font-family: 'Inter', 'Pretendard', sans-serif;
+  --bg-color: #f3f4f6;
+  --text-primary: #1f2937;
+  --text-secondary: #4b5563;
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+  --danger: #ef4444;
+  --success: #10b981;
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  overflow: hidden;
+}
+
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 16px;
+}
+
+.app-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.map-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+/* 대시보드 오버레이 */
+.dashboard-overlay {
+  position: absolute;
+  top: 104px;
+  left: 20px;
+  width: calc(100vw - 40px);
+  /* 모바일을 위해 동적 너비 */
+  max-width: 360px;
+  /* PC에서도 너무 넓지 않게 설정 */
+  max-height: calc(100vh - 124px);
+  /* 화면 아래로 짤리지 않게 처리 */
+  overflow-y: auto;
+  /* 내용이 길면 스크롤 */
+  z-index: 10;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+/* 접힌 상태일 때 */
+.dashboard-overlay.collapsed {
+  gap: 0;
+  padding: 16px 20px;
+  overflow-y: visible;
+}
+
+.header h1 {
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 4px;
+  background: linear-gradient(135deg, var(--primary), #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.header p {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+/* New Content Area styling */
+.content-area {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 250px;
+}
+
+.inner-loading {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  color: var(--primary);
+  min-height: 150px;
+}
+
+.inner-error {
+  flex: 1;
+  color: var(--danger);
+  text-align: center;
+  margin-top: 20px;
+}
+
+.score-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.score-circle {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 16px;
+  font-size: 36px;
+  font-weight: 900;
+  box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: white;
+  color: var(--primary);
+  transition: all 0.3s ease;
+}
+
+.score-circle.perfect {
+  color: var(--success);
+}
+
+.score-circle.bad {
+  color: var(--danger);
+}
+
+/* Star Rating styling */
+.ratings-box {
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rating-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.star-rating {
+  color: #fbbf24;
+  letter-spacing: 2px;
+}
+
+.rating-num {
+  color: var(--text-secondary);
+  font-size: 12px;
+  letter-spacing: 0;
+  margin-left: 4px;
+}
+
+.comment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.comment-item {
+  font-size: 14px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+  border-left: 4px solid var(--primary);
+}
+
+/* Actions (Chips & GPS) */
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.chips-container {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.chips-container::-webkit-scrollbar {
+  height: 4px;
+}
+
+.chips-container::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+.chip {
+  padding: 6px 14px;
+  border: 1px solid var(--primary);
+  background: white;
+  color: var(--primary);
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.chip:hover {
+  background: var(--primary);
+  color: white;
+}
+
+.gps-btn {
+  padding: 12px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+  transition: transform 0.2s;
+}
+
+.gps-btn:hover {
+  transform: translateY(-2px);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Map custom overlay */
+.custom-marker {
+  padding: 6px 12px;
+  background: var(--primary);
+  color: white;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transform: translate(-50%, -100%);
+  position: absolute;
+  white-space: nowrap;
+}
+
+.custom-marker::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px 6px 0;
+  border-style: solid;
+  border-color: var(--primary) transparent transparent transparent;
+}
+
+/* Logo container styling */
+.logo-container {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+  background: transparent;
+}
+
+.logo-text {
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--primary);
+  letter-spacing: -1px;
+  margin: 0;
+  line-height: 1;
+  text-shadow: 0 2px 6px rgba(255, 255, 255, 0.9);
+}
+
+.logo-subtext {
+  font-size: 13px;
+  font-weight: 600;
+  color: #4b5563;
+  margin-top: 4px;
+  text-align: justify;
+  text-align-last: justify;
+  width: 100%;
+  text-shadow: 0 1px 4px rgba(255, 255, 255, 0.9);
+}
