@@ -2,9 +2,11 @@
 
 > **"사무실에서 벗어나 카페로!"**  
 > 루팡 지도는 직장인들이 사무실을 벗어나 근처 카페로 농땡이(루팡) 치러 가기 얼마나 좋은지 분석해 주는 위치 기반 웹 서비스입니다.
+
 [Preview]
 ![LupinMap Preview 1](https://github.com/user-attachments/assets/eceb05a2-946b-4c1f-968d-9bec78fea9f7) 
 ![LupinMap Preview 2](https://github.com/user-attachments/assets/aa2093b8-e1b7-4357-9ac4-4cdc0e57e733)
+
 
 ## 주요 기능 (Key Features)
 
@@ -21,6 +23,7 @@
 - **모바일 최적화 UI**
   - 모바일 환경에서도 화면을 가리지 않도록 **반응형(Responsive) 폭 조절** 및 **패널 접기/펼치기** 기능
 
+
 ## 기술 스택 (Tech Stack)
 
 ### BFF(Backend For Frontend) pattern
@@ -29,6 +32,7 @@
 - **External APIs**: 
   - 카카오맵 API (`Local`, `Geocoder`, 지도 렌더링)
   - 공공데이터포털 기상청 API (초단기예보 `getUltraSrtFcst`)
+
 
 ##  로컬 실행 방법 (How to Run)
 
@@ -65,6 +69,7 @@ npm run dev
 
 > **모바일 테스트 팁**: 스마트폰에서 테스트하려면, `npm run dev` 실행 후 터미널에 뜨는 `Network` 주소(예: `http://192.168.0.x:5173/`)로 스마트폰 브라우저에서 접속하시면 됩니다. (App.jsx 내부에서 동적 호스트네임을 사용하므로 별도의 코드 수정 없이 백엔드와 연결됩니다.)
 
+
 ## 디렉토리 구조 (Directory Structure)
 
 ```text
@@ -89,6 +94,7 @@ LupinMap/
     │   └── index.css           # 전역 스타일 및 글래스모피즘 UI
     └── package.json
 ```
+
 
 ## 데이터 플로우 및 시퀀스 다이어그램 (Data Flow)
 
@@ -115,6 +121,8 @@ sequenceDiagram
     
     FE->>User: 대시보드 UI 업데이트 (점수, 별점, 카페 리스트)
 ```
+
+
 ## 핵심 문제 해결
 
 ### 문제 1: 기상청 API의 독자적인 좌표계 문제
@@ -143,6 +151,7 @@ sequenceDiagram
 - **해결 과정**:
   - `fetch` URL을 `http://${window.location.hostname}:5001/api/lupin-index`로 동적 할당하여, 접속한 IP를 그대로 따라가도록 변경했습니다.
 - **결과**: 별도의 배포 없이도 동일 네트워크망의 모바일 기기에서 완벽하게 반응형 UI와 백엔드 통신을 테스트할 수 있었습니다.
+
 
 ## 프로젝트 후기
 
